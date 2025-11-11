@@ -18,39 +18,35 @@ pages-website-demo/
 
 ## Setup Instructions
 
-### 1. Initialize Git Repository
-
-```bash
-git init
-git add .
-git commit -m "Initial commit: Setup minimal GitHub Pages site"
-```
-
-### 2. Create GitHub Repository
+### 1. Create GitHub Repository FIRST
 
 1. Go to [GitHub](https://github.com/new)
 2. Create a new repository named `pages-website-demo`
 3. Do NOT initialize with README, .gitignore, or license (we already have these)
 4. Click "Create repository"
+5. **Copy your repository URL** (it will be shown on the next page)
 
-### 3. Push to GitHub
+### 2. Initialize Git and Push to GitHub
+
+**Important:** Replace `YOUR_USERNAME` with your actual GitHub username before running these commands!
 
 ```bash
+git init
+git add .
+git commit -m "Initial commit: Setup minimal GitHub Pages site"
 git remote add origin https://github.com/YOUR_USERNAME/pages-website-demo.git
 git branch -M main
 git push -u origin main
 ```
 
-Replace `YOUR_USERNAME` with your GitHub username.
-
-### 4. Enable GitHub Pages
+### 3. Enable GitHub Pages
 
 1. Go to your repository on GitHub
 2. Click **Settings** → **Pages** (in the left sidebar)
 3. Under **Source**, select **GitHub Actions**
 4. The workflow will automatically deploy your site
 
-### 5. Access Your Site
+### 4. Access Your Site
 
 Your site will be live at:
 ```
