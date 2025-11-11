@@ -1,0 +1,19 @@
+{
+  "name": "pages-website-demo",
+  "version": "1.0.0",
+  "description": "Minimal GitHub Pages website with Maker.co integration",
+  "private": true,
+  "scripts": {
+    "dev": "npx http-server -p 8000",
+    "start": "npm run dev"
+  },
+  "keywords": [
+    "github-pages",
+    "static-site"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
