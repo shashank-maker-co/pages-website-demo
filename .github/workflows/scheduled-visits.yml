@@ -1,0 +1,39 @@
+name: Scheduled Page Visits
+
+on:
+  schedule:
+    # Runs every 12 hours (at 00:00 and 12:00 UTC)
+    - cron: '0 */12 * * *'
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  visit-page:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Run page visits
+        run: npm run visit
+
+      - name: Upload logs (if any failures)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visit-logs
+          path: |
+            *.log
+            screenshots/

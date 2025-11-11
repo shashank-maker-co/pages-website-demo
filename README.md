@@ -8,12 +8,16 @@ A minimal GitHub Pages website with Maker.co integration.
 pages-website-demo/
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml       # GitHub Actions auto-deployment
-├── .gitignore              # Git ignore rules
-├── package.json            # Node.js configuration
-├── tsconfig.json           # TypeScript configuration
-├── index.html              # Main HTML page
-└── README.md               # This file
+│       ├── deploy.yml            # GitHub Actions auto-deployment
+│       └── scheduled-visits.yml  # Scheduled page visits (every 12 hours)
+├── scripts/
+│   ├── visit-page.ts             # Playwright script to visit page 10 times
+│   └── scheduler.ts              # Local scheduler (optional)
+├── .gitignore                    # Git ignore rules
+├── package.json                  # Node.js configuration
+├── tsconfig.json                 # TypeScript configuration
+├── index.html                    # Main HTML page
+└── README.md                     # This file
 ```
 
 ## Setup Instructions
@@ -74,9 +78,81 @@ Visit [http://localhost:8000](http://localhost:8000) to view the site locally.
 ## Features
 
 - Minimal HTML5 boilerplate
-- Maker.co automation integration
+- Maker.co embed integration (social story)
 - Automatic deployment via GitHub Actions
-- TypeScript support (for future enhancements)
+- TypeScript support
+- Automated page visits using Playwright
+- Scheduled visits every 12 hours via GitHub Actions
+
+## Automated Page Visits
+
+This project includes a Playwright automation script that visits your GitHub Pages site 10 times in a row, waiting 10 seconds on each visit. This can be useful for:
+- Testing your Maker.co embed
+- Generating page views
+- Monitoring page load performance
+- Keeping the page active
+
+### Option 1: GitHub Actions Scheduler (Recommended)
+
+The project includes a GitHub Actions workflow that automatically runs every 12 hours.
+
+**Enable the scheduler:**
+1. Push the code to GitHub (if not already done)
+2. The workflow is located at `.github/workflows/scheduled-visits.yml`
+3. It will run automatically every 12 hours at 00:00 and 12:00 UTC
+4. View runs in the **Actions** tab on GitHub
+
+**Manual trigger:**
+1. Go to your repository on GitHub
+2. Click **Actions** → **Scheduled Page Visits**
+3. Click **Run workflow** → **Run workflow**
+
+### Option 2: Run Locally
+
+**Install dependencies first:**
+```bash
+npm install
+npx playwright install chromium
+```
+
+**Run visits once:**
+```bash
+npm run visit
+```
+
+This will:
+- Open the browser (visible by default)
+- Visit your page 10 times
+- Wait 10 seconds on each visit
+- Close the browser after each visit
+- Show progress in the terminal
+
+**Run with continuous scheduler:**
+```bash
+npm run scheduler
+```
+
+This will:
+- Run the visits immediately
+- Schedule them to run every 12 hours
+- Keep running in the background (press Ctrl+C to stop)
+
+### Configuration
+
+To customize the automation, edit `scripts/visit-page.ts`:
+
+```typescript
+const PAGE_URL = 'https://shashank-maker-co.github.io/pages-website-demo';
+const WAIT_TIME = 10000; // 10 seconds (in milliseconds)
+const VISIT_COUNT = 10;   // Number of visits
+```
+
+You can also change the headless setting:
+```typescript
+const browser = await chromium.launch({
+  headless: false, // Set to true to hide the browser
+});
+```
 
 ## Making Changes
 

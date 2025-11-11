@@ -5,7 +5,9 @@
   "private": true,
   "scripts": {
     "dev": "npx http-server -p 8000",
-    "start": "npm run dev"
+    "start": "npm run dev",
+    "visit": "ts-node scripts/visit-page.ts",
+    "scheduler": "ts-node scripts/scheduler.ts"
   },
   "keywords": [
     "github-pages",
@@ -14,6 +16,10 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@playwright/test": "^1.40.1",
+    "@types/node": "^20.10.5",
+    "node-cron": "^3.0.3",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }
 }
