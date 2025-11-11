@@ -86,10 +86,16 @@ Visit [http://localhost:8000](http://localhost:8000) to view the site locally.
 
 ## Automated Page Visits
 
-This project includes a Playwright automation script that visits your GitHub Pages site 10 times in a row, waiting 10 seconds on each visit. This can be useful for:
-- Testing your Maker.co embed
-- Generating page views
-- Monitoring page load performance
+This project includes a Playwright automation script that visits your GitHub Pages site across multiple devices:
+- **Desktop**: 10 visits (standard desktop browser)
+- **Tablet**: 10 visits (iPad Pro simulation)
+- **Mobile**: 10 visits (iPhone 14 Pro Max simulation)
+- **Total**: 30 visits per run
+
+Each visit waits 10 seconds on the page. This can be useful for:
+- Testing your Maker.co embed across different devices
+- Generating page views from various screen sizes
+- Monitoring responsive design and page load performance
 - Keeping the page active
 
 ### Option 1: GitHub Actions Scheduler (Recommended)
@@ -122,10 +128,13 @@ npm run visit
 
 This will:
 - Open the browser (visible by default)
-- Visit your page 10 times
+- Run 10 visits on Desktop
+- Run 10 visits on Tablet (iPad Pro simulation)
+- Run 10 visits on Mobile (iPhone 14 Pro Max simulation)
 - Wait 10 seconds on each visit
 - Close the browser after each visit
 - Show progress in the terminal
+- **Total: 30 visits per run**
 
 **Run with continuous scheduler:**
 ```bash
@@ -143,8 +152,15 @@ To customize the automation, edit `scripts/visit-page.ts`:
 
 ```typescript
 const PAGE_URL = 'https://shashank-maker-co.github.io/pages-website-demo';
-const WAIT_TIME = 10000; // 10 seconds (in milliseconds)
-const VISIT_COUNT = 10;   // Number of visits
+const WAIT_TIME = 10000;           // 10 seconds (in milliseconds)
+const VISIT_COUNT_PER_DEVICE = 10; // Number of visits per device
+
+// Device configurations
+const DEVICES = [
+  { name: 'Desktop', config: undefined },
+  { name: 'Tablet', config: devices['iPad Pro'] },
+  { name: 'Mobile', config: devices['iPhone 14 Pro Max'] },
+];
 ```
 
 You can also change the headless setting:
@@ -153,6 +169,12 @@ const browser = await chromium.launch({
   headless: false, // Set to true to hide the browser
 });
 ```
+
+To change which devices to test, modify the `DEVICES` array. Available devices from Playwright include:
+- `devices['iPad']`, `devices['iPad Pro']`, `devices['iPad Mini']`
+- `devices['iPhone 14']`, `devices['iPhone 14 Pro Max']`, `devices['iPhone 13']`
+- `devices['Pixel 5']`, `devices['Galaxy S9+']`
+- And many more (see Playwright documentation)
 
 ## Making Changes
 
